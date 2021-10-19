@@ -1,0 +1,88 @@
+
+
+<html>
+    <head>
+        <title>Joshua's Junkyard</title>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='success.css') }}">
+        <meta charset="utf-8">
+        </head>
+   <body> 
+       <!-- <p>Vehicle added successfully! </p>     -->
+       <a href="http://localhost:5000/vehicles">
+        <button>Add another car</button>
+        </a>
+        {% if data %}
+        <h1>Vehicles in our Shop</h1>
+        {%endif %}
+     <p>
+        <!-- {{data}} -->
+        {% for i in range(data|length) %}
+        <ul>
+            <li><b>Nickname: {{data[i].name}}</b>
+                <ul>
+                    <li><b>Car Type: {{data[i].carType}}</b></li>
+                    <li><b>Wheels: {{data[i].wheel}}</b></li>
+                    {% if data[i].door %}
+                        <li><b>Doors: {{data[i].door}}</b></li>
+                    {% endif %}
+                    {% if data[i].slide1 %}
+                        <li><b>Door 1 sliding: {{data[i].slide1}}</b></li>
+                        <li><b>Door 2 sliding: {{data[i].slide2}}</b></li>
+                        <li><b>Door 3 sliding: {{data[i].slide3}}</b></li>
+                        <li><b>Door 4 sliding: {{data[i].slide4}}</b></li>
+                    {% endif %}
+                    <li><b>Mileage: {{data[i].mile}}</b></li>
+                    <li><b>Mileage Rating: {{data[i].rate}}</b></li>
+                    <li><b>Engine Status: {{data[i].estat}}</b></li>
+                    {% if data[i].seat %}
+                        <li><b>Seat Status: {{data[i].seat}}</b></li>
+                    {% endif %}
+                    <button value= '{{data[i].id}}' class='editbutton'>Edit Car</button>
+                    <button value= '{{data[i].id}}' class='delbutton'>Delete Car</button>
+                </ul>
+            </li>
+        </ul>
+        {% endfor %} 
+     </p>
+   </body>
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+   <script>
+    $(function () {
+        $('.delbutton').on('click', function () {
+            var delID = $(this).val();
+            console.log(delID);
+            var urlToDel = 'http://localhost:5000/vehicles/'+delID;
+            $.ajax({
+                url: urlToDel,
+                type: 'DELETE',
+                success: function(result) {
+                    location.reload()
+                }
+                
+            });
+        });
+    });
+    $(function () {
+        $('.editbutton').on('click', function () {
+            var updID = $(this).val();
+            console.log(updID);
+            var urlToUpd = 'http://localhost:5000/vehicles/'+updID;
+            $.ajax({
+                url: urlToUpd,
+                data: updID,
+                success: function(result) {
+                    console.log(result)
+                    // $.ajax({
+                    //     url: urlToDel,
+                    //     data: updID,
+                    //     type: 'PATCH',
+                    //     // success: function(result) {
+                    //     //     location.href = "http://www.example.com/ThankYou.html"
+                    //     // }
+                    // });
+                }
+            });
+        });
+    });
+    </script>
+</html>

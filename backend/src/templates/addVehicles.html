@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Joshua's Junkyard</title>
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='vehicles.css') }}">
+  <meta charset="utf-8">
+  </head>
+   <body>     
+      <form action = "http://localhost:5000/vehicles" method = "post">
+        <h1 style="text-align:center">Add a vehicle:</h1> 
+        <p style="text-align:center"><label for="carTypeID">Car Type: </label>
+          <select name="carType" id ='carTypeID'>
+            <option selected='selected' value='Sedan'>Sedan</option>
+            <option value='Coupe'>Coupe</option>
+            <option value='Minivan'>Mini-Van</option>
+            <option value='Motorcycle'>Motorcycle</option>
+        </select></p>
+        <p style="text-align:center">Nickname: <input type = "text" name = "name" /></p>
+        <p style="text-align:center">Mileage: <input type = "text" name = "mile" /></p>
+        <p style="text-align:center"><label for="wheelID">Wheels: </label>
+        <select name="wheel" id ='wheelID'>
+          <option value='1'>1</option>
+          <option value='2'>2</option>
+          <option value='3'>3</option>
+          <option selected='selected' value='4'>4</option>
+        </select></p>
+        <p style="text-align:center"><label for="doorID">Doors: </label>
+        <select name="door" id ='doorID'>
+          <option value='1'>1</option>
+          <option value='2'>2</option>
+          <option value='3'>3</option>
+          <option selected='selected' value='4'>4</option>
+        </select> </p>
+        <p style="text-align:center"><label for="slideID1" hidden>Door 1: </label>
+          <select name="slide1" id ='slideID1' hidden>
+            <option value='True'>Sliding</option>
+            <option value='False' selected='selected'>Not Sliding</option>
+          </select></p>
+        <p style="text-align:center"><label for="slideID2" hidden='hidden'>Door 2: </label>
+          <select name="slide2" id ='slideID2' hidden='hidden'>
+            <option value='True'>Sliding</option>
+            <option value='False' selected='selected'>Not Sliding</option>
+          </select></p>
+          <p style="text-align:center"><label for="slideID3" hidden='hidden'>Door 3: </label>
+            <select name="slide3" id ='slideID3' hidden='hidden'>
+              <option value='True'>Sliding</option>
+              <option value='False' selected='selected'>Not Sliding</option>
+            </select></p>
+            <p style="text-align:center"><label for="slideID4" hidden='hidden'>Door 4: </label>
+              <select name="slide4" id ='slideID4' hidden='hidden'>
+                <option value='True'>Sliding</option>
+                <option value='False' selected='selected'>Not Sliding</option>
+              </select></p>
+        <p style="text-align:center"><label for="estatID">Engine Status: </label>
+        <select name="estat" id ='estatID'>
+          <option selected='selected' value='Works'>Works</option>
+          <option value='Fixable'>Fixable</option>
+          <option value='Junk'>Junk</option>
+        </select> </p>
+        <p style="text-align:center"><label for="seatID" hidden>Seat Status: </label>
+          <select name="seat" id ='seatID' hidden>
+            <option selected='selected' value='Works'>Works</option>
+            <option value='Fixable'>Fixable</option>
+            <option value='Funk'>Junk</option>
+          </select> </p>
+        <p style="text-align:center"><input type = "submit" value = "Submit" /></p>
+      </form>
+      <p>
+        <ul>
+        </ul> 
+     </p>    
+   </body>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+  <script>    
+    $('#carTypeID').on('change',function(){
+      var selection = $(this).val();
+      selection = selection.toLowerCase();
+      $('label[for="slideID1"]').hide ();
+      $('label[for="slideID2"]').hide ();
+      $('label[for="slideID3"]').hide ();
+      $('label[for="slideID4"]').hide ();
+      $('#slideID1').hide(); 
+      $('#slideID2').hide(); 
+      $('#slideID3').hide(); 
+      $('#slideID4').hide(); 
+      if (selection===('motorcycle')){
+        $('label[for="doorID"]').hide (); // hide door
+        $('#doorID').hide();
+        document.getElementById("wheelID").value = '2'; //two wheels max
+        $("#wheelID option[value=" + 3 + "]").hide();
+        $("#wheelID option[value=" + 4 + "]").hide();
+        $('label[for="seatID"]').show (); //show seat
+        $('#seatID').show(); 
+      }
+      else{
+        document.getElementById("doorID").value = '4';
+        $('label[for="doorID"]').show ();
+        $('#doorID').show();
+        $('label[for="seatID"]').hide ();
+        $('#seatID').hide(); 
+        if (selection==='minivan'){
+          $('label[for="slideID1"]').show ();
+          $('label[for="slideID2"]').show ();
+          $('label[for="slideID3"]').show ();
+          $('label[for="slideID4"]').show ();
+          $('#slideID1').show(); 
+          $('#slideID2').show(); 
+          $('#slideID3').show(); 
+          $('#slideID4').show(); 
+        }
+      } 
+    });
+    
+  </script>
+</html>
